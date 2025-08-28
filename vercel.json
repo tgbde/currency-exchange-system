@@ -23,7 +23,7 @@
       "dest": "/frontend/build/static/$1"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg))",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot))",
       "dest": "/frontend/build/$1"
     },
     {
@@ -39,11 +39,5 @@
     "api/index.py": {
       "runtime": "python3.9"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    }
-  ]
+  }
 }
