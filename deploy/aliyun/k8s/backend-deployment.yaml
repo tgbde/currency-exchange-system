@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-backend
+  namespace: currency-exchange
+  labels:
+    app: currency-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: currency-backend
+  template:
+    metadata:
+      labels:
+        app: currency-backend
+    spec:
+      containers:
+      - name: currency-backend
+        image: registry.cn-hangzhou.aliyuncs.com/your-namespace/currency-exchange:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: FLASK_ENV
+          value: "production"
+        - name: DATABASE_URI
+          value: "sqlite:///instance/currency_exchange.db"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 5001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5001
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/instance
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: currency-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: currency-backend-service
+  namespace: currency-exchange
+spec:
+  selector:
+    app: currency-backend
+  ports:
+  - protocol: TCP
+    port: 5001
+    targetPort: 5001
+  type: ClusterIP

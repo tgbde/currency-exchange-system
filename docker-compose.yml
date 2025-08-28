@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: currency-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URI=sqlite:///instance/currency_exchange.db
+    volumes:
+      - backend_data:/app/instance
+    networks:
+      - currency-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # 前端服务
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: currency-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - currency-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# 数据卷
+volumes:
+  backend_data:
+    driver: local
+
+# 网络
+networks:
+  currency-network:
+    driver: bridge

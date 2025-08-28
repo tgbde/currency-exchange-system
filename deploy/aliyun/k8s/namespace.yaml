@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: currency-exchange
+  labels:
+    name: currency-exchange
+    environment: production

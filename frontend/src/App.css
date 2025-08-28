@@ -1,0 +1,66 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.chart-container {
+  width: 100%;
+  height: 400px;
+}
+
+.data-table {
+  margin-top: 20px;
+}
+
+.currency-select {
+  width: 200px;
+  margin-right: 16px;
+}
+
+.date-picker {
+  margin-right: 16px;
+}
+
+.filter-form {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-form-item {
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.card-container {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.stat-card .ant-statistic-title {
+  font-size: 16px;
+}
+
+.stat-card .ant-statistic-content {
+  font-size: 24px;
+}
